@@ -8,9 +8,6 @@ Este é um projeto fullstack desenvolvido com Java, Spring Boot, React, PostgreS
 - [Instalação](#instalação)
 - [Uso](#uso)
 - [API](#api)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
-- [Contato](#contato)
 
 ## Tecnologias Utilizadas
 
@@ -29,6 +26,8 @@ Este é um projeto fullstack desenvolvido com Java, Spring Boot, React, PostgreS
 Siga os passos abaixo para instalar e configurar o projeto em sua máquina local:
 
 ### Backend
+#API
+-Documentação criada com Swagger
 
 1. Clone o repositório:
    ```bash
