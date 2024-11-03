@@ -65,7 +65,7 @@ const TaskBoard = () => {
   }, []);
 
   const handleAddTask = async (taskData) => {
-    const response = await fetch('http://localhost:8080/api/v1/tasks/newTask', {
+    const response = await fetch('https://banckend-mytasks.onrender.com/api/v1/tasks/newTask', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const TaskBoard = () => {
   const handleEdit = async (taskData) => {
     if (!taskToEdit) return;
   
-    const response = await fetch(`http://localhost:8080/api/v1/tasks/updateTask/${taskToEdit.id}`, {
+    const response = await fetch(`https://banckend-mytasks.onrender.com/api/v1/tasks/updateTask/${taskToEdit.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ const TaskBoard = () => {
 
   const handleDelete = async () => {
     if (taskIdToDelete) {
-      await fetch(`http://localhost:8080/api/v1/tasks/deleteTask/${taskIdToDelete}`, {
+      await fetch(`https://banckend-mytasks.onrender.com/api/v1/tasks/deleteTask/${taskIdToDelete}`, {
         method: 'DELETE',
       });
       setTasks(tasks.filter(task => task.id !== taskIdToDelete));
