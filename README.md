@@ -1,7 +1,7 @@
 # My Tasks
 
 Este é um projeto fullstack desenvolvido com Java, Spring Boot, React, PostgreSQL, Docker, além de Swagger para documentação. A aplicação é uma Todo List, criada especificamente com o intuito de demonstrar minhas habilidades técnicas para uma vaga.
-- [Clique aqui para ver o p rojeto em execução](https://frontend-mytasks.onrender.com/)
+- [Clique aqui para ver o projeto em execução](https://frontend-mytasks.onrender.com/)
 
 ## Índice
 
