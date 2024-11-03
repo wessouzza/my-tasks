@@ -19,9 +19,9 @@ Este é um projeto fullstack desenvolvido com Java, Spring Boot, React, PostgreS
   - [Swagger](https://swagger.io/)
 
 - **Frontend:**
-  - [React](https://reactjs.org/)
+  - [React js](https://reactjs.org/)
   - [Tailwind](https://tailwindcss.com/)
-  - 
+    
 ## Instalação
 
 Siga os passos abaixo para instalar e configurar o projeto em sua máquina local:
