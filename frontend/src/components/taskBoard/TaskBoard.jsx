@@ -51,7 +51,7 @@ const TaskBoard = () => {
 
   //CRUD OPERATIONS
   const fetchTasks = async () => {
-    const response = await fetch('http://localhost:8080/api/v1/tasks');
+    const response = await fetch('https://banckend-mytasks.onrender.com/api/v1/tasks');
     const data = await response.json();
     const tasksWithStringIds = data.map(task => ({
       ...task,
