@@ -120,7 +120,7 @@ const TaskBoard = () => {
 
   return (
     <>
-      <section className="flex flex-col m-6 sm:mx-6 overflow-hidden">
+      <section className="flex flex-col my-6 sm:mx-6 overflow-hidden">
         <TaskProvider>
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="tasks" type="list" direction="vertical">
