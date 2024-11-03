@@ -125,7 +125,7 @@ const TaskBoard = () => {
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="tasks" type="list" direction="vertical">
             {(provided) => (
-              <article className="flex flex-col gap-5 min-w-[700px] m-3 p-4 rounded-md border bg-slate-50"
+              <article className="flex flex-col gap-5 w-auto sm:w-[700px] m-3 p-4 rounded-md border bg-slate-50"
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 >
