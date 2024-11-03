@@ -14,7 +14,21 @@ const TaskBoard = () => {
   const [active, setActive] = useState(false);
   const [popup, setPopup] = useState(false);
   const [deletePopup, setDeletePopup] = useState(false);
-  const [tasks, setTasks] = useState([]);
+  //const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([
+    {
+      "id": "1",
+      "name": "Task taskinha taskita.",
+      "cost": 200.0,
+      "deadline": "2024-12-30"
+    },
+    {
+      "id": "1",
+      "name": "Task taskinha taskita.",
+      "cost": 2000.0,
+      "deadline": "2024-10-11"
+    }
+  ]);
 
   
   const reorderTasks =(list, start, end)=>{
@@ -120,12 +134,12 @@ const TaskBoard = () => {
 
   return (
     <>
-      <section className="flex flex-col m-6 overflow-hidden">
+      <section className="flex flex-col my-6 sm:mx-6 overflow-hidden">
         <TaskProvider>
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="tasks" type="list" direction="vertical">
             {(provided) => (
-              <article className="flex flex-col gap-5 min-w-[700px] m-3 p-4 rounded-md border bg-slate-50"
+              <article className="flex flex-col gap-5 w-auto sm:w-[700px] m-2 p-4 rounded-md border bg-slate-50"
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 >
