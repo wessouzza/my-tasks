@@ -20,7 +20,7 @@ const TaskComponent = ({task, index, showEdit, showDelete, onMoveUp, onMoveDown}
                 onMoveUp={onMoveUp}
                 onMoveDown={onMoveDown}
                 />
-                <div className="flex items-center justify-between bg-white p-3 border w-[95%] sm:w-full rounded-l-xl sm:rounded-r-full">
+                <div className="flex items-center justify-between bg-white p-3 border w-[95%] sm:w-full sm:rounded-r-full">
                     <h2 className="w-[260px] font-semibold text-slate-500">{task.name}</h2>
                     <h3 className={`font-semibold p-1 border-2 rounded-md w-24 text-center text-slate-500 ${task.cost >= 1000 ? 'border border-orange-300' : 'border-2'}`}>R${task.cost}</h3>
                     <h3 className="font-semibold hidden sm:block text-slate-500 w-24">{task.deadline}</h3>
