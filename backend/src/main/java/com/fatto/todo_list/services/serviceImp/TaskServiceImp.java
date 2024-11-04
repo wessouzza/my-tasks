@@ -11,8 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,25 +43,6 @@ public class TaskServiceImp implements TaskService {
         }
         int index = taskList.size() -1;
         return taskList.get(index).getSortingPosition();
-    }
-
-    public void reorderTasks(List<TaskDto> taskList){
-        List<Integer> sortingNum = new ArrayList<>();
-        List<Tasks> tasksToUpdate = new ArrayList<>();
-    
-        for (TaskDto dto : taskList) {
-            Tasks task = tasksRepository.findById(dto.getId())
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + dto.getId()));
-            sortingNum.add(task.getSortingPosition());
-            tasksToUpdate.add(task);
-        }
-        Collections.sort(sortingNum);
-    
-        for (int i = 0; i < tasksToUpdate.size(); i++) {
-            Tasks task = tasksToUpdate.get(i);
-            task.setSortingPosition(sortingNum.get(i));
-        }
-        tasksRepository.saveAll(tasksToUpdate);
     }
 
     @Override
