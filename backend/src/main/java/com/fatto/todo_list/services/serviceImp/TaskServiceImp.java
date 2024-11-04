@@ -46,6 +46,26 @@ public class TaskServiceImp implements TaskService {
     }
 
     @Override
+    public void reorderTasks(List<TaskDto> taskList){
+        List<Integer> sortingNum = new ArrayList<>();
+        List<Tasks> tasksToUpdate = new ArrayList<>();
+    
+        for (TaskDto dto : taskList) {
+            Tasks task = tasksRepository.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("Task not found with id: " + dto.getId()));
+            sortingNum.add(task.getSortingPosition());
+            tasksToUpdate.add(task);
+        }
+        Collections.sort(sortingNum);
+    
+        for (int i = 0; i < tasksToUpdate.size(); i++) {
+            Tasks task = tasksToUpdate.get(i);
+            task.setSortingPosition(sortingNum.get(i));
+        }
+        tasksRepository.saveAll(tasksToUpdate);
+    }
+
+    @Override
     public List<TaskDto> listAllTasks() {
         List<TaskDto> foundTasks = tasksRepository.findAll(Sort.by("sortingPosition").ascending())
                 .stream().map(EntityMapper::entityToDto).collect(Collectors.toList());
