@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.scheduling.config.Task;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,11 +31,6 @@ public class TasksController {
         return ResponseEntity.ok().body(taskService.createTask(taskDto));
     }
 
-    @PostMapping("/reorder")
-    public ResponseEntity<Void> reorderTasks(@RequestBody List<TaskDto> dtos){
-        taskService.reorderTasks(dtos);
-        return ResponseEntity.noContent().build();
-    }
 
     @GetMapping
     @Operation(summary = "Listar tarefas", description = "Lista todas as tarefas disponíveis de forma ordenada.")
