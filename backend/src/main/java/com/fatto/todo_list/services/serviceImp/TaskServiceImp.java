@@ -8,9 +8,12 @@ import com.fatto.todo_list.model.Tasks;
 import com.fatto.todo_list.repositories.TasksRepository;
 import com.fatto.todo_list.services.TaskService;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +46,21 @@ public class TaskServiceImp implements TaskService {
         }
         int index = taskList.size() -1;
         return taskList.get(index).getSortingPosition();
+    }
+
+    @Override
+    public void reorderTasks(List<TaskDto> taskList){
+        List<Integer> sortingNum = new ArrayList<>();
+        for(TaskDto dto : taskList){
+            Tasks task = tasksRepository.findById(dto.getId()).orElseThrow();
+            sortingNum.add(task.getSortingPosition());
+            Collections.sort(sortingNum);
+            
+            for(int i=0; i<=sortingNum.size()-1; i++){
+                task.setSortingPosition(i);
+                tasksRepository.save(task);
+            }
+        }
     }
 
     @Override
