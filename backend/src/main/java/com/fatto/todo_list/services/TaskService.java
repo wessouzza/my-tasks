@@ -7,8 +7,6 @@ import java.util.List;
 public interface TaskService {
     TaskDto createTask(TaskDto taskDto);
 
-    void reorderTasks(List<TaskDto> taskList);
-
     List<TaskDto> listAllTasks();
 
     TaskDto updateTask(Long id, TaskDto taskDto);
