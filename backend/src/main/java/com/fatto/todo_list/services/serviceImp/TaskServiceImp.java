@@ -45,7 +45,6 @@ public class TaskServiceImp implements TaskService {
         return taskList.get(index).getSortingPosition();
     }
 
-    @Override
     public void reorderTasks(List<TaskDto> taskList){
         List<Integer> sortingNum = new ArrayList<>();
         List<Tasks> tasksToUpdate = new ArrayList<>();
