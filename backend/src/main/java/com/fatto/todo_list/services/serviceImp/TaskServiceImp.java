@@ -8,12 +8,12 @@ import com.fatto.todo_list.model.Tasks;
 import com.fatto.todo_list.repositories.TasksRepository;
 import com.fatto.todo_list.services.TaskService;
 import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +29,7 @@ public class TaskServiceImp implements TaskService {
         Tasks newTask = new Tasks();
         List<Tasks> tasks = tasksRepository.findAll();
         if(tasksRepository.findByName(taskDto.getName()) != null){
-            throw new TaskValidationException("There's already a task with this name.");
+            throw new TaskValidationException("Existe uma tarefa com mesmo nome.");
         }
         newTask.setName(taskDto.getName());
         newTask.setCost(taskDto.getCost());
@@ -44,23 +44,40 @@ public class TaskServiceImp implements TaskService {
         if(taskList.isEmpty()){
             return 0;
         }
-        int index = taskList.size() -1;
-        return taskList.get(index).getSortingPosition();
+        int greaterSortingPosition = taskList.get(0).getSortingPosition();
+
+        for (int i = 1; i < taskList.size(); i++) {
+            int currentSortingPosition = taskList.get(i).getSortingPosition();
+            if (currentSortingPosition > greaterSortingPosition) {
+                greaterSortingPosition = currentSortingPosition;
+            }
+        }
+
+        return greaterSortingPosition;
     }
 
     @Override
     public void reorderTasks(List<TaskDto> taskList){
-        List<Integer> sortingNum = new ArrayList<>();
-        for(TaskDto dto : taskList){
-            Tasks task = tasksRepository.findById(dto.getId()).orElseThrow();
-            sortingNum.add(task.getSortingPosition());
-            Collections.sort(sortingNum);
-            
-            for(int i=0; i<=sortingNum.size()-1; i++){
-                task.setSortingPosition(i);
-                tasksRepository.save(task);
-            }
+        List<Tasks> tasksToUpdate = new ArrayList<>();
+        Set<Integer> existingPositions = new HashSet<>();
+        
+        for (TaskDto dto : taskList) {
+            Tasks task = tasksRepository.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("Task not found with id: " + dto.getId()));
+            existingPositions.add(task.getSortingPosition());
+            tasksToUpdate.add(task);
         }
+
+        int newSortingPosition = 1;
+        for (Tasks task : tasksToUpdate) {
+            while (existingPositions.contains(newSortingPosition)) {
+                newSortingPosition++; 
+            }
+            task.setSortingPosition(newSortingPosition);
+            existingPositions.add(newSortingPosition); 
+            newSortingPosition++;
+        }
+        tasksRepository.saveAll(tasksToUpdate);
     }
 
     @Override
@@ -77,6 +94,10 @@ public class TaskServiceImp implements TaskService {
     public TaskDto updateTask(Long id, TaskDto taskDto) {
         Tasks taskToUpdate = tasksRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException(""));
+        Tasks existingTask = tasksRepository.findByName(taskDto.getName());
+        if(existingTask != null && !existingTask.getId().equals(id)){
+            throw new TaskValidationException("Existe uma tarefa com mesmo nome.");
+        }
         taskToUpdate.setName(taskDto.getName());
         taskToUpdate.setCost(taskDto.getCost());
         taskToUpdate.setDeadline(taskDto.getDeadline());
