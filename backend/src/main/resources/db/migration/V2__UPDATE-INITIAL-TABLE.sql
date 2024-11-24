@@ -1,2 +1,4 @@
+DELETE FROM tb_task WHERE cost > 5000;
+
 ALTER TABLE tb_task
     ALTER COLUMN cost TYPE NUMERIC(15,2) USING cost::NUMERIC(15,2);
