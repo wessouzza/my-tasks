@@ -23,7 +23,7 @@ const TaskBoard = () => {
     const [removed] = result.splice(start, 1);
     result.splice(end, 0, removed);
     
-    const response = await fetch('https://frontend-mytasks.onrender.com/api/v1/tasks/reorder', {
+    const response = await fetch('https://banckend-mytasks.onrender.com/api/v1/tasks/reorder', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -65,7 +65,7 @@ const TaskBoard = () => {
 
   //CRUD OPERATIONS
   const fetchTasks = async () => {
-    const response = await fetch('https://frontend-mytasks.onrender.com/api/v1/tasks');
+    const response = await fetch('https://banckend-mytasks.onrender.com/api/v1/tasks');
     const data = await response.json();
     const tasksWithStringIds = data.map(task => ({
       ...task,
@@ -80,7 +80,7 @@ const TaskBoard = () => {
 
   const handleAddTask = async (taskData) => {
     try{
-    const response = await fetch('https://frontend-mytasks.onrender.com/api/v1/tasks/newTask', {
+    const response = await fetch('https://banckend-mytasks.onrender.com/api/v1/tasks/newTask', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ const TaskBoard = () => {
     if (!taskToEdit) return;
     try{
     
-      const response = await fetch(`https://frontend-mytasks.onrender.com/api/v1/tasks/updateTask/${taskToEdit.id}`, {
+      const response = await fetch(`https://banckend-mytasks.onrender.com/api/v1/tasks/updateTask/${taskToEdit.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -144,7 +144,7 @@ const TaskBoard = () => {
 
   const handleDelete = async () => {
     if (taskIdToDelete) {
-      await fetch(`https://frontend-mytasks.onrender.com/api/v1/tasks/deleteTask/${taskIdToDelete}`, {
+      await fetch(`https://banckend-mytasks.onrender.com/api/v1/tasks/deleteTask/${taskIdToDelete}`, {
         method: 'DELETE',
       });
       setTasks(tasks.filter(task => task.id !== taskIdToDelete));
