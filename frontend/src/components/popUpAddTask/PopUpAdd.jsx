@@ -1,17 +1,48 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const PopUpAdd = ({ triggered, setTriggered, save, taskToEdit, errorMsg, setErrorMsg }) => {
-  const [taskName, setTaskName] = useState(taskToEdit ? taskToEdit.name : "");
-  const [taskCost, setTaskCost] = useState(taskToEdit ? taskToEdit.cost : "");
-  const [taskDate, setTaskDate] = useState(taskToEdit ? taskToEdit.deadline : "");
+  const [taskName, setTaskName] = useState("");
+  const [taskCost, setTaskCost] = useState("");
+  const [taskDate, setTaskDate] = useState("");
   const [error, setError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [costError, setCostError] = useState("");
 
-  const validateFields =()=>{
-    if(taskCost < 0){
+  const nameValidation =()=>{
+    if(taskName.length > 30){
+      setNameError("Máximo de caracteres: 30");
       return false;
     }
+
+    if(!taskName || !taskName.trim()){
+      return false;
+    }
+    setNameError("");
     return true;
   }
+
+  const costValidation =()=>{
+    if(taskCost < 0){
+      setCostError("Apenas valores positivos");
+      return false;
+    }
+
+    if(taskCost.length > 12){
+      setCostError("Quantidade de caracteres excedida");
+      return false;
+    }
+    setCostError("");
+    return true;
+  }
+  
+  useEffect(()=>{
+    costValidation();
+  },[taskCost]);
+
+  useEffect(()=>{
+    nameValidation();
+  },[taskName]);
+
 
   useEffect(() => {
     if (taskToEdit) {
@@ -19,34 +50,45 @@ const PopUpAdd = ({ triggered, setTriggered, save, taskToEdit, errorMsg, setErro
       setTaskCost(taskToEdit.cost);
       setTaskDate(taskToEdit.deadline);
     } else {
-      setTaskName("");
-      setTaskCost("");
-      setTaskDate("");
-      
+      clearFields();
     }
   }, [taskToEdit]);
 
   const handleSave = (e) => {
     e.preventDefault();
-    if(!validateFields()){
-      setError("Valor inválido");
+    if(!costValidation()){
+      setCostError("Valor inválido");
+    }else if(!nameValidation()){
+      setNameError("Nome inválido");
     }else{
       const taskData = {
         name: taskName,
         cost: taskCost,
         deadline: taskDate,
       };
-      save(taskData);
       clearFields();
+      save(taskData);
     }
   };
 
   const clearFields =()=>{
-    setTaskName("");
-    setTaskCost("");
-    setTaskDate("");  
-    setError("");
-    setErrorMsg("");
+    if(!taskToEdit){
+      setTaskName("");
+      setTaskCost("");
+      setTaskDate("");  
+      setError("");
+      setErrorMsg("");
+      setNameError("");
+      setCostError("");
+    }else{
+      setTaskName(taskToEdit.name);
+      setTaskCost(taskToEdit.cost);
+      setTaskDate(taskToEdit.deadline);
+      setError("");
+      setErrorMsg("");
+      setNameError("");
+      setCostError("");
+    }
   }
 
   return (
@@ -57,29 +99,34 @@ const PopUpAdd = ({ triggered, setTriggered, save, taskToEdit, errorMsg, setErro
             {taskToEdit ? "Editar" : "Nova tarefa"}
           </h2>
           <input
-            className="p-2 border rounded-md outline-none focus:ring-2 focus:ring-slate-300"
+            className={`p-2 border rounded-md outline-none focus:ring-2
+              ${nameError ? 'ring-red-400 border border-red-400' : 'focus:ring-slate-300'}`}
             type="text"
             placeholder="Nome"
             value={taskName}
             onChange={(e)=> {
-              setTaskName(e.target.value)
+              setTaskName(e.target.value);
+              nameValidation();
             }}
             autoFocus
             required
           />
+          {nameError && (<span className="text-center font-semibold text-red-400">{nameError}</span>)}
+          
           <input
             className={`p-2 border rounded-md outline-none focus:ring-2
-              ${taskCost < 0 ? 'ring-red-400' : 'focus:ring-slate-300'} `}
+              ${taskCost < 0 || costError ? 'ring-red-400 border border-red-400' : 'focus:ring-slate-300'} `}
             type="number"
             placeholder="Custo"
             value={taskCost}
             onChange={(e)=> {
               setTaskCost(e.target.value)
-              validateFields();
+              costValidation();
             }}
             required
           />
-          {error && (<p className="text-center font-semibold text-red-400">{error}</p>)}
+          {costError && (<p className="text-center font-semibold text-red-400">{costError}</p>)}
+          
           <input
             className="p-2 border rounded-md outline-none focus:ring-2 focus:ring-slate-300"
             type="date"
@@ -97,7 +144,7 @@ const PopUpAdd = ({ triggered, setTriggered, save, taskToEdit, errorMsg, setErro
             </button>
             <button
               onClick={() => {
-                setTriggered(false)
+                setTriggered(false);
                 clearFields();
               }}
               className="border-2 border-red-400 text-red-400 w-24 font-bold p-3 rounded transition-all

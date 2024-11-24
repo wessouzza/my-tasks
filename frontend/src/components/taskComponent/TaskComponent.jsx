@@ -39,9 +39,9 @@ const TaskComponent = ({task, index, showEdit, showDelete, onMoveUp, onMoveDown}
                 <div className="flex items-center justify-between bg-white p-2 border w-[95%] sm:w-full sm:rounded-r-full">
                         <div>
                             <span className="text-xs text-slate-400 px-1 rounded-full border">Id: {task.id}</span>
-                            <h2 className="w-[190px] sm:w-[260px] font-semibold text-slate-500">{task.name}</h2>
+                            <h2 className="w-[190px] sm:w-[260px] overflow-x-hidden overflow-ellipsis font-semibold text-slate-500">{task.name}</h2>
                         </div>
-                        <h3 className={`hidden sm:block font-semibold p-1 border-2 rounded-md w-24 text-center text-slate-500 ${task.cost >= 1000 ? 'border border-orange-300' : 'border-2'}`}>{formatedCurrency(task.cost)}</h3>
+                        <h3 className={`hidden sm:block overflow-x-hidden font-semibold p-1 border-2 rounded-md min-w-28 text-center text-slate-500 ${task.cost >= 1000 ? 'border border-orange-300' : 'border-2'}`}>{formatedCurrency(task.cost)}</h3>
                         <h3 className="font-semibold hidden sm:block text-slate-500 w-24">{formatedDate(task.deadline)}</h3>
                     <div className="flex gap-1">
                         <button onClick={()=> showEdit(task)} className="flex justify-center text-lg items-center rounded-full bg-slate-100 cursor-pointer size-11
