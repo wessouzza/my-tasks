@@ -2,6 +2,7 @@ package com.fatto.todo_list.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,13 +13,13 @@ public class Tasks {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Double cost;
+    private BigDecimal cost;
     private LocalDate deadline;
     private int sortingPosition;
 
     public Tasks(){}
 
-    public Tasks(Long id, String name, Double cost, LocalDate deadline, int sortingPosition) {
+    public Tasks(Long id, String name, BigDecimal cost, LocalDate deadline, int sortingPosition) {
         this.id = id;
         this.name = name;
         this.cost = cost;
@@ -42,11 +43,11 @@ public class Tasks {
         this.name = name;
     }
 
-    public Double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(Double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 

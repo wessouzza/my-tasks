@@ -1,17 +1,17 @@
 package com.fatto.todo_list.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class TaskDto {
     private Long id;
     private String name;
-    private Double cost;
+    private BigDecimal cost;
     private LocalDate deadline;
 
     public TaskDto(){}
 
-    public TaskDto(Long id, String name, Double cost, LocalDate deadline) {
+    public TaskDto(Long id, String name, BigDecimal cost, LocalDate deadline) {
         this.id = id;
         this.name = name;
         this.cost = cost;
@@ -34,11 +34,11 @@ public class TaskDto {
         this.name = name;
     }
 
-    public Double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(Double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
