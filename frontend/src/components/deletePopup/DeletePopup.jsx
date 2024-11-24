@@ -17,7 +17,7 @@ const DeletePopup = ({ triggered, setTriggered, deleteTask }) => {
             </button>
             <button
               onClick={() => setTriggered(false)}
-              className="bborder-2 border-red-400 text-red-400 w-24 font-bold p-3 rounded transition-all
+              className="border-2 border-red-400 text-red-400 w-24 font-bold p-3 rounded transition-all
                 hover:bg-red-400 hover:text-white"
             >
               Cancelar
